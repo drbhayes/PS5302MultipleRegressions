@@ -1,0 +1,63 @@
+install.packages("gridExtra")
+install.packages("ppcor")
+library(correlation)
+install.packages("correlation")
+library(gridExtra)
+library(ppcor)
+install.packages("tidyverse")
+library(cocor)
+install.packages("cocor")     M 
+library(tidyverse)
+
+summary(ParanoiaData)
+ParanoiaData <- read_csv("Paranoia.csv")
+view(ParanoiaData)
+
+ParanoiaData$Ethnicity <- as.factor(ParanoiaData$Ethnicity)
+ParanoiaData$PWQ_Total <- as.numeric(ParanoiaData$PWQ_Total)
+ParanoiaData$MADRS_Total <- as.numeric(ParanoiaData$MADRS_Total)
+ParanoiaData$Gender <- as.factor(ParanoiaData$Gender)
+ParanoiaData$Age <- as.numeric(ParanoiaData$Age)
+ParanoiaData$DTS_Total <- as.numeric(ParanoiaData$DTS_Total)
+ParanoiaData$GADS_Total <- as.numeric(ParanoiaData$GADS_Total)
+
+plot2 <- ggplot(ParanoiaData, aes(x = PWQ_Total, y = DTS_Total)) +
+  theme_classic() +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+plot1 <- ggplot(ParanoiaData, aes(x = PWQ_Total, y = GADS_Total)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_point() +
+  theme_classic()
+  geom_smooth(method = "lm", se = FALSE) +
+grid.arrange(plot1, plot2, plot3, nrow = 1, ncol = 3)
+
+plot3 <- ggplot(ParanoiaData, aes(x = PWQ_Total, y = MADRS_Total)) +
+  theme_classic() +
+  geom_point()
+cor.test(ParanoiaData$PWQ_Total, ParanoiaData$GADS_Total, )method = "pearson"
+ParanoiaData %>%
+  correlation(p_adjust = "none") %>%
+  dplyr::select(PWQ_Total, DTS_Total, MADRS_Total, GADS_Total)
+
+cor.test(ParanoiaData$PWQ_Total, ParanoiaData$MADRS_Total, method = "pearson")
+cor.test(ParanoiaData$PWQ_Total, ParanoiaData$DTS_Total, method = "pearson")
+
+
+summary(Forcedentry)
+Forcedentry <- lm(~ DTS_Total + GADS_Total + MADRS_Total, data = ParanoiaData PWQ_Total )
+
+StepwiseBackwards <-(Stepwise, direction = "backward") step
+Stepwise <- lm(PWQ_Total ~ DTS_Total + GADS_Total + MADRS_Total, data = ParanoiaData)
+StepwiseBackwards summary(StepwiseBackwards)
+
+r2_full <- summary(Hierarchical)$adj.r.squared
+Control <- lm(PWQ_Total + DTS_Total ~ data = ParanoiaData)
+summary(Control)
+anova(Control, Hierarchical)
+print(r2_change)
+Hierarchical <- lm(PWQ_Total ~ DTS_Total + GADS_Total + MADRS_Total, data = ParanoiaData)
+r2_change <- r2_full - r2_control
+summary(Hierarchical)
+r2_control <- summary(Control)$adj.r.squared
